@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HelpDesk.ProducerService.Application\HelpDesk.ProducerService.Application.csproj" />
+    <ProjectReference Include="..\HelpDesk.ProducerService.Infrastructure\HelpDesk.ProducerService.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

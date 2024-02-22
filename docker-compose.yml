@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  helpdesk.db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: helpdesk.db
+
+  helpdesk.mq:
+    image: rabbitmq:management
+    container_name: helpdesk.mq    
+
+  helpdesk.apigateway:
+    image: ${DOCKER_REGISTRY-}helpdesk-apigateway
+    container_name: helpdesk.apigateway
+    build:
+      context: .
+      dockerfile: src/HelpDesk.ApiGateway/Dockerfile
+
+  helpdesk.consumerservice.api:
+    image: ${DOCKER_REGISTRY-}helpdesk-consumerservice-api
+    container_name: helpdesk.consumerservice.api
+    build:
+      context: .
+      dockerfile: src/HelpDesk.ConsumerService.Api/Dockerfile
+
+  helpdesk.producerservice.api:
+    image: ${DOCKER_REGISTRY-}helpdesk-producerservice-api
+    container_name: helpdesk.producerservice.api
+    build:
+      context: .
+      dockerfile: src/HelpDesk.ProducerService.Api/Dockerfile

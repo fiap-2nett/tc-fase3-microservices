@@ -1,0 +1,68 @@
+version: '3.4'
+
+services:
+  helpdesk.db:
+    volumes:
+      - ./.containers/sqlserver:/var/opt/mssql/data
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=yourStrong(!)Password
+
+  helpdesk.mq:
+    hostname: helpdesk-mq-master
+    # volumes:
+    #   - ./.containers/rabbitmq/data/:/var/lib/rabbitmq
+    #   - ./.containers/rabbitmq/log/:/var/log/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+
+  helpdesk.apigateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/aspnetapp.pfx
+      - ConnectionStrings__HelpDeskDb=Server=helpdesk.db,1433;Database=HelpDeskDb;User=sa;Password=yourStrong(!)Password;Encrypt=False;  
+    depends_on:
+      - helpdesk.db
+      - helpdesk.mq
+    ports:
+      - "5000:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro      
+
+  helpdesk.consumerservice.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/aspnetapp.pfx
+      - ConnectionStrings__HelpDeskDb=Server=helpdesk.db,1433;Database=HelpDeskDb;User=sa;Password=yourStrong(!)Password;Encrypt=False;
+    depends_on:
+      - helpdesk.db
+      - helpdesk.mq
+    ports:
+      - "5001:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro      
+
+  helpdesk.producerservice.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password 
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/aspnetapp.pfx
+      - ConnectionStrings__HelpDeskDb=Server=helpdesk.db,1433;Database=HelpDeskDb;User=sa;Password=yourStrong(!)Password;Encrypt=False;
+    depends_on:
+      - helpdesk.db
+      - helpdesk.mq
+    ports:
+      - "5002:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro      
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
