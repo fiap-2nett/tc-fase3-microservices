@@ -19,7 +19,7 @@ namespace HelpDesk.ConsumerService.Persistence
 
             services.AddScoped<IDbContext>(serviceProvider => serviceProvider.GetRequiredService<EFContext>());
             services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<EFContext>());
-
+            
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();

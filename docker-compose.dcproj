@@ -6,7 +6,7 @@
     <ProjectGuid>82c738ec-470e-419b-9a34-30c2b6b08d8c</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>helpdesk.api</DockerServiceName>
+    <DockerServiceName>helpdesk.apigateway</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

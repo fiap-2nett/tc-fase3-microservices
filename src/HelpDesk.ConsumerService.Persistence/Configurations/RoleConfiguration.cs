@@ -1,4 +1,4 @@
-using HelpDesk.ConsumerService.Domain.Entities;
+using HelpDesk.Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

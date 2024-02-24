@@ -11,7 +11,6 @@ namespace HelpDesk.ConsumerService.Domain.Repositories
         Task<User> GetByIdAsync(int idUser);
         Task<User> GetByEmailAsync(Email email);
         Task<bool> IsEmailUniqueAsync(Email email);
-        void Insert(User user);
 
         #endregion
     }

@@ -21,4 +21,13 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.11" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HelpDesk.ApiGateway.Infrastructure\HelpDesk.ApiGateway.Infrastructure.csproj" />
+    <ProjectReference Include="..\HelpDesk.ApiGateway.Persistence\HelpDesk.ApiGateway.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="HelpDesk.ApiGateway.IntegrationTests" />
+  </ItemGroup>
+
 </Project>

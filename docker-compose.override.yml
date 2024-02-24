@@ -25,7 +25,11 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/aspnetapp.pfx
-      - ConnectionStrings__HelpDeskDb=Server=helpdesk.db,1433;Database=HelpDeskDb;User=sa;Password=yourStrong(!)Password;Encrypt=False;  
+      - ConnectionStrings__HelpDeskDb=Server=helpdesk.db,1433;Database=HelpDeskDb;User=sa;Password=yourStrong(!)Password;Encrypt=False;
+      - Jwt__Issuer=https://localhost:5000/
+      - Jwt__Audience=https://localhost:5000/
+      - Jwt__Security=WvvWzuqwJ5DvDGaRRVnKCuL2k35aEhiY0qoKR7qj0gVn3f6PxwPnhbB2VPp82gLH
+      - Jwt__TokenExpirationInMinutes=60
     depends_on:
       - helpdesk.db
       - helpdesk.mq
@@ -42,6 +46,10 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/aspnetapp.pfx
       - ConnectionStrings__HelpDeskDb=Server=helpdesk.db,1433;Database=HelpDeskDb;User=sa;Password=yourStrong(!)Password;Encrypt=False;
+      - Jwt__Issuer=https://localhost:5000/
+      - Jwt__Audience=https://localhost:5000/
+      - Jwt__Security=WvvWzuqwJ5DvDGaRRVnKCuL2k35aEhiY0qoKR7qj0gVn3f6PxwPnhbB2VPp82gLH
+      - Jwt__TokenExpirationInMinutes=60
     depends_on:
       - helpdesk.db
       - helpdesk.mq
@@ -58,6 +66,10 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password 
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/aspnetapp.pfx
       - ConnectionStrings__HelpDeskDb=Server=helpdesk.db,1433;Database=HelpDeskDb;User=sa;Password=yourStrong(!)Password;Encrypt=False;
+      - Jwt__Issuer=https://localhost:5000/
+      - Jwt__Audience=https://localhost:5000/
+      - Jwt__Security=WvvWzuqwJ5DvDGaRRVnKCuL2k35aEhiY0qoKR7qj0gVn3f6PxwPnhbB2VPp82gLH
+      - Jwt__TokenExpirationInMinutes=60
     depends_on:
       - helpdesk.db
       - helpdesk.mq

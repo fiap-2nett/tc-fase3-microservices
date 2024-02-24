@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using HelpDesk.ConsumerService.Domain.Entities;
 using HelpDesk.Core.Domain.Cryptography;
 using HelpDesk.Core.Domain.Entities;
 using HelpDesk.Core.Domain.Enumerations;

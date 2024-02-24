@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using HelpDesk.ConsumerService.Domain.Entities;
-using HelpDesk.ConsumerService.Domain.Enumerations;
 using HelpDesk.ConsumerService.Persistence.Core.Primitives;
+using HelpDesk.Core.Domain.Entities;
 using HelpDesk.Core.Domain.Enumerations;
 
 namespace HelpDesk.ConsumerService.Persistence.Seeds

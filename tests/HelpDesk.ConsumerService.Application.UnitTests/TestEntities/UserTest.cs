@@ -1,8 +1,6 @@
-using HelpDesk.Core.Domain.ValueObjects;
-using HelpDesk.ConsumerService.Domain.Entities;
-using HelpDesk.ConsumerService.Domain.Enumerations;
 using HelpDesk.Core.Domain.Entities;
 using HelpDesk.Core.Domain.Enumerations;
+using HelpDesk.Core.Domain.ValueObjects;
 
 namespace HelpDesk.ConsumerService.Application.UnitTests.TestEntities
 {
