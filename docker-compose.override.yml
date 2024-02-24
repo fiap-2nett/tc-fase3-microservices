@@ -23,8 +23,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=helpdesk
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/helpdesk.pfx
       - ConnectionStrings__HelpDeskDb=Server=helpdesk.db,1433;Database=HelpDeskDb;User=sa;Password=yourStrong(!)Password;Encrypt=False;
       - Jwt__Issuer=https://localhost:5000/
       - Jwt__Audience=https://localhost:5000/
@@ -37,14 +37,14 @@ services:
       - "5000:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro      
+      - ./docker/aspnet/https:/root/.aspnet/https:ro
 
   helpdesk.consumerservice.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=helpdesk
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/helpdesk.pfx
       - ConnectionStrings__HelpDeskDb=Server=helpdesk.db,1433;Database=HelpDeskDb;User=sa;Password=yourStrong(!)Password;Encrypt=False;
       - Jwt__Issuer=https://localhost:5000/
       - Jwt__Audience=https://localhost:5000/
@@ -57,14 +57,14 @@ services:
       - "5001:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro      
+      - ./docker/aspnet/https:/root/.aspnet/https:ro
 
   helpdesk.producerservice.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=password 
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=helpdesk
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/helpdesk.pfx
       - ConnectionStrings__HelpDeskDb=Server=helpdesk.db,1433;Database=HelpDeskDb;User=sa;Password=yourStrong(!)Password;Encrypt=False;
       - Jwt__Issuer=https://localhost:5000/
       - Jwt__Audience=https://localhost:5000/
@@ -76,5 +76,5 @@ services:
     ports:
       - "5002:443"
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro      
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ./docker/aspnet/https:/root/.aspnet/https:ro

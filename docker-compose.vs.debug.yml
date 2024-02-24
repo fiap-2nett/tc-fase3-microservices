@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  helpdesk.apigateway:
+    volumes:
+      - ./docker/aspnet/https:/root/.aspnet/https:ro
+
+  helpdesk.consumerservice.api:
+    volumes:
+      - ./docker/aspnet/https:/root/.aspnet/https:ro
+
+  helpdesk.producerservice.api:
+    volumes:
+      - ./docker/aspnet/https:/root/.aspnet/https:ro
