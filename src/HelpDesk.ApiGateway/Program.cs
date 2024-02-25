@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
+using System.Net.Http;
+using System.Net;
 
 namespace HelpDesk.ApiGateway
 {
@@ -27,6 +32,10 @@ namespace HelpDesk.ApiGateway
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwagger();
 
+            builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+            builder.Services.AddOcelot(builder.Configuration);
+
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -35,6 +44,7 @@ namespace HelpDesk.ApiGateway
                 app.ConfigureSwagger();
             }
 
+            app.UseOcelot().Wait();
             app.EnsureDatabaseCreated();
             app.UseCustomExceptionHandler();
             app.UseHttpsRedirection();

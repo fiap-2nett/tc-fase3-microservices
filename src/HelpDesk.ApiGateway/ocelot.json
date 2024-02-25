@@ -1,0 +1,190 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/categories",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.consumerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/categories",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/categories/{idCategory}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.consumerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/categories/{idCategory}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/ticketstatus",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.consumerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/ticketstatus",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/ticketstatus/{idTicketStatus}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.consumerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/ticketstatus/{idTicketStatus}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/Teste",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.consumerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Teste",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/tickets",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.consumerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/tickets",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/tickets/{idTicket}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.consumerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/tickets/{idTicket}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/tickets",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.producerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/tickets",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/tickets/{idTicket}/assign-to/me",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.producerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/tickets/{idTicket}/assign-to/me",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/tickets/{idTicket}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.producerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/tickets/{idTicket}",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/tickets/{idTicket}/cancel",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.producerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/tickets/{idTicket}/cancel",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/tickets/{idTicket}/assign-to",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.producerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/tickets/{idTicket}/assign-to",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/tickets/{idTicket}/complete",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.producerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/tickets/{idTicket}/complete",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/tickets/{idTicket}/change-status",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.producerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/tickets/{idTicket}/change-status",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:5000",
+    "SkipSslValidation": true
+  }
+}
