@@ -29,8 +29,8 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=helpdesk
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/helpdesk.pfx
       - ConnectionStrings__HelpDeskDb=Server=helpdesk.db,1433;Database=HelpDeskDb;User=sa;Password=yourStrong(!)Password;Encrypt=False;
-      - Jwt__Issuer=https://localhost:5000/
-      - Jwt__Audience=https://localhost:5000/
+      - Jwt__Issuer=https://helpdesk.apigateway/
+      - Jwt__Audience=https://helpdesk.apigateway/
       - Jwt__Security=WvvWzuqwJ5DvDGaRRVnKCuL2k35aEhiY0qoKR7qj0gVn3f6PxwPnhbB2VPp82gLH
       - Jwt__TokenExpirationInMinutes=60
     depends_on:
@@ -48,8 +48,8 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=helpdesk
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/helpdesk.pfx
       - ConnectionStrings__HelpDeskDb=Server=helpdesk.db,1433;Database=HelpDeskDb;User=sa;Password=yourStrong(!)Password;Encrypt=False;
-      - Jwt__Issuer=https://localhost:5000/
-      - Jwt__Audience=https://localhost:5000/
+      - Jwt__Issuer=https://helpdesk.apigateway/
+      - Jwt__Audience=https://helpdesk.apigateway/
       - Jwt__Security=WvvWzuqwJ5DvDGaRRVnKCuL2k35aEhiY0qoKR7qj0gVn3f6PxwPnhbB2VPp82gLH
       - Jwt__TokenExpirationInMinutes=60
       - MessageBroker__Host=amqp://helpdesk.mq:5672
@@ -71,18 +71,24 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=helpdesk
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/helpdesk.pfx
       - ConnectionStrings__HelpDeskDb=Server=helpdesk.db,1433;Database=HelpDeskDb;User=sa;Password=yourStrong(!)Password;Encrypt=False;
-      - Jwt__Issuer=https://localhost:5000/
-      - Jwt__Audience=https://localhost:5000/
+      - Jwt__Issuer=https://helpdesk.apigateway/
+      - Jwt__Audience=https://helpdesk.apigateway/
       - Jwt__Security=WvvWzuqwJ5DvDGaRRVnKCuL2k35aEhiY0qoKR7qj0gVn3f6PxwPnhbB2VPp82gLH
       - Jwt__TokenExpirationInMinutes=60
       - MessageBroker__Host=amqp://helpdesk.mq:5672
       - MessageBroker__Username=guest
       - MessageBroker__Password=guest
+      - UserApiService__Url=https://helpdesk.apigateway/users/
+      - UserApiService__Timeout=60
+      - CategoryApiService__Url=https://helpdesk.consumerservice.api/categories/
+      - CategoryApiService__Timeout=60
+      - TicketApiService__Url=https://helpdesk.consumerservice.api/tickets/
+      - TicketApiService__Timeout=60
     depends_on:
       - helpdesk.db
       - helpdesk.mq
     ports:
-      - "5002:443"
+      - "5002:443"    
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ./docker/aspnet/https:/root/.aspnet/https:ro

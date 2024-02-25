@@ -5,6 +5,7 @@ namespace HelpDesk.Core.Domain.Authentication
         #region IUserSessionProvider Members
 
         int IdUser { get; }
+        string Authorization { get; }
 
         #endregion
     }

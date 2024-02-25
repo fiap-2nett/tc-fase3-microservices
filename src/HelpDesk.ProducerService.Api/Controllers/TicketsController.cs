@@ -5,9 +5,9 @@ using HelpDesk.Core.Domain.Enumerations;
 using HelpDesk.Core.Domain.Errors;
 using HelpDesk.Core.Domain.Exceptions;
 using HelpDesk.Core.Domain.Helpers;
+using HelpDesk.ProducerService.Api.Constants;
 using HelpDesk.ProducerService.Api.Contracts;
 using HelpDesk.ProducerService.Api.Infrastructure;
-using HelpDesk.ProducerService.Application.Contracts.Tickets;
 using HelpDesk.ProducerService.Application.Core.Abstractions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -48,12 +48,11 @@ namespace HelpDesk.ProducerService.Api.Controllers
             if (createTicketRequest is null)
                 throw new DomainException(DomainErrors.Ticket.DataSentIsInvalid);
 
-            var idTicket = await _ticketService.CreateAsync(createTicketRequest.IdCategory,
+            await _ticketService.CreateAsync(createTicketRequest.IdCategory,
                 createTicketRequest.Description,
                 idUserRequester: _userSessionProvider.IdUser);
-
-            // TODO: Implementar lógica da Uri para microserviço de Consumer
-            return Created("", idTicket);
+            
+            return Ok();
         }
 
         /// <summary>

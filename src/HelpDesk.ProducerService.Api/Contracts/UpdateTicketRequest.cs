@@ -1,9 +1,9 @@
-namespace HelpDesk.ProducerService.Application.Contracts.Tickets
+namespace HelpDesk.ProducerService.Api.Contracts
 {
     /// <summary>
-    /// Represents the request ticket creation.
+    /// Represents the update ticket request.
     /// </summary>
-    public sealed class CreateTicketRequest
+    public sealed class UpdateTicketRequest
     {
         /// <summary>
         /// Gets or sets the category.

@@ -1,4 +1,4 @@
-namespace HelpDesk.ConsumerService.Api.Contracts
+namespace HelpDesk.ConsumerService.Api.Constants
 {
     public static class ApiRoutes
     {
