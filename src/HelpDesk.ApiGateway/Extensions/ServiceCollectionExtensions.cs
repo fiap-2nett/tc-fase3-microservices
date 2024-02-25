@@ -17,11 +17,11 @@ namespace HelpDesk.ApiGateway.Extensions
         {
             services.AddSwaggerGen(setup =>
             {
-                setup.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "HelpDesk API",
-                    Version = "v1",
-                });
+                //setup.SwaggerDoc("v1", new OpenApiInfo
+                //{
+                //    Title = "HelpDesk API",
+                //    Version = "v1",
+                //});
 
                 setup.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {

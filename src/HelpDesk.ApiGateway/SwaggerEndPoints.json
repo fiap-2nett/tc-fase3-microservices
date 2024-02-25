@@ -2,31 +2,31 @@
   "SwaggerEndPoints": [
     {
       "Key": "Consumer",
+      "TransformByOcelotConfig": false,
       "Config": [
         {
           "Name": "HelpDesk - ConsumerService API",
-          "Version": "v1",
-          "Url": "https://localhost:5001/swagger/index.html"
+          "Url": "https://localhost:5001/swagger/v1/swagger.json"
         }
       ]
     },
     {
       "Key": "Producer",
+      "TransformByOcelotConfig": false,
       "Config": [
         {
           "Name": "HelpDesk - ProducerService API",
-          "Version": "v1",
-          "Url": "https://localhost:5002/swagger/index.html"
+          "Url": "https://localhost:5002/swagger/v1/swagger.json"
         }
       ]
     },
     {
       "Key": "Gateway",
+      "TransformByOcelotConfig": false,
       "Config": [
         {
-          "Name": "HelpDesk - ProducerService API",
-          "Version": "v1",
-          "Url": "https://localhost:5000/swagger/index.html"
+          "Name": "HelpDesk - Gateway API",
+          "Url": "https://localhost:5000/swagger/v1/swagger.json"
         }
       ]
     }
