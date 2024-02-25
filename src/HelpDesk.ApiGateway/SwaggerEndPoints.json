@@ -1,0 +1,34 @@
+{
+  "SwaggerEndPoints": [
+    {
+      "Key": "Consumer",
+      "Config": [
+        {
+          "Name": "HelpDesk - ConsumerService API",
+          "Version": "v1",
+          "Url": "https://localhost:5001/swagger/index.html"
+        }
+      ]
+    },
+    {
+      "Key": "Producer",
+      "Config": [
+        {
+          "Name": "HelpDesk - ProducerService API",
+          "Version": "v1",
+          "Url": "https://localhost:5002/swagger/index.html"
+        }
+      ]
+    },
+    {
+      "Key": "Gateway",
+      "Config": [
+        {
+          "Name": "HelpDesk - ProducerService API",
+          "Version": "v1",
+          "Url": "https://localhost:5000/swagger/index.html"
+        }
+      ]
+    }
+  ]
+}
