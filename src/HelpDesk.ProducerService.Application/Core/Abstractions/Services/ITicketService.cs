@@ -7,7 +7,7 @@ namespace HelpDesk.ProducerService.Application.Core.Abstractions.Services
     {
         #region ITicketService Members
 
-        Task<int> CreateAsync(int idCategory, string description, int idUserRequester);
+        Task CreateAsync(int idCategory, string description, int idUserRequester);
         Task UpdateAsync(int idTicket, int idCategory, string description, int idUserPerformedAction);
         Task ChangeStatusAsync(int idTicket, TicketStatuses changedStatus, int idUserPerformedAction);
         Task CancelAsync(int idTicket, string cancellationReason, int idUserPerformedAction);

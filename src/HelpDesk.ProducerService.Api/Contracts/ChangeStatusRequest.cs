@@ -1,4 +1,4 @@
-namespace HelpDesk.ProducerService.Application.Contracts.Tickets
+namespace HelpDesk.ProducerService.Api.Contracts
 {
     /// <summary>
     /// Represents the request to change the ticket status.

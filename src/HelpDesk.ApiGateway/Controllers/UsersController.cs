@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using HelpDesk.ApiGateway.Application.Contracts.Common;
 using HelpDesk.ApiGateway.Application.Contracts.Users;
 using HelpDesk.ApiGateway.Application.Core.Abstractions.Services;
+using HelpDesk.ApiGateway.Constants;
 using HelpDesk.ApiGateway.Contracts;
 using HelpDesk.ApiGateway.Infrastructure;
 using HelpDesk.Core.Domain.Authentication;
@@ -42,6 +43,18 @@ namespace HelpDesk.ApiGateway.Controllers
         [ProducesResponseType(typeof(PagedList<UserResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Get([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
             => Ok(await _userService.GetUsersAsync(new GetUsersRequest(page, pageSize)));
+
+        /// <summary>
+        /// Represents the query for getting a user.
+        /// </summary>
+        /// <param name="idUser">The user identifier.</param>
+        /// <returns>The user info.</returns>
+        [HttpGet(ApiRoutes.Users.GetById)]
+        [ProducesResponseType(typeof(DetailedUserResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetById([FromRoute] int idUser)
+            => Ok(await _userService.GetUserByIdAsync(idUser));
 
         /// <summary>
         /// Represents the query for getting a user authenticated.

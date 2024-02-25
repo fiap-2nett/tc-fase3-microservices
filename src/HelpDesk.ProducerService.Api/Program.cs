@@ -1,6 +1,7 @@
 using HelpDesk.ProducerService.Api.Extensions;
 using HelpDesk.ProducerService.Application;
 using HelpDesk.ProducerService.Infrastructure;
+using HelpDesk.ProducerService.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +17,8 @@ namespace HelpDesk.ProducerService.Api
 
             builder.Services
                 .AddApplication()
-                .AddInfrastructure(builder.Configuration);
+                .AddInfrastructure(builder.Configuration)
+                .AddPersistence(builder.Configuration);
 
             builder.Services.AddControllers();
             builder.Services.AddHttpContextAccessor();

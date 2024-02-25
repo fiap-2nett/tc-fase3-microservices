@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using HelpDesk.ConsumerService.Api.Contracts;
+using HelpDesk.ConsumerService.Api.Constants;
 using HelpDesk.ConsumerService.Api.Infrastructure;
 using HelpDesk.ConsumerService.Application.Contracts.Common;
 using HelpDesk.ConsumerService.Application.Contracts.Tickets;

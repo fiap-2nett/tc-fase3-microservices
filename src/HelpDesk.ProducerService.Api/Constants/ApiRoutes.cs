@@ -1,4 +1,4 @@
-namespace HelpDesk.ProducerService.Api.Contracts
+namespace HelpDesk.ProducerService.Api.Constants
 {
     public static class ApiRoutes
     {

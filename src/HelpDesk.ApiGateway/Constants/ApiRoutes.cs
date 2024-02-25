@@ -1,4 +1,4 @@
-namespace HelpDesk.ApiGateway.Contracts
+namespace HelpDesk.ApiGateway.Constants
 {
     public static class ApiRoutes
     {
@@ -11,6 +11,7 @@ namespace HelpDesk.ApiGateway.Contracts
         public static class Users
         {
             public const string Get = "users";
+            public const string GetById = "users/{idUser:int}";
             public const string GetMyProfile = "users/me";
             public const string Update = "users/me";
             public const string ChangePassword = "users/me/change-password";

@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using HelpDesk.ApiGateway.Application.Contracts.Authentication;
 using HelpDesk.ApiGateway.Application.Core.Abstractions.Services;
+using HelpDesk.ApiGateway.Constants;
 using HelpDesk.ApiGateway.Contracts;
 using HelpDesk.ApiGateway.Infrastructure;
 using Microsoft.AspNetCore.Authorization;

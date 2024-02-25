@@ -78,7 +78,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpDesk.Core.Domain", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Domain", "3 - Domain", "{80A872F0-D829-42FD-BCBE-EE6F3AA0A828}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpDesk.ApiGateway.Domain", "src\HelpDesk.ApiGateway.Domain\HelpDesk.ApiGateway.Domain.csproj", "{28E2868B-0412-4058-9108-2B2310FC2890}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpDesk.ApiGateway.Domain", "src\HelpDesk.ApiGateway.Domain\HelpDesk.ApiGateway.Domain.csproj", "{28E2868B-0412-4058-9108-2B2310FC2890}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Presentation", "1 - Presentation", "{9EDFDA64-EA12-4F16-984A-547283A07F0E}"
 EndProject
@@ -86,19 +86,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infrastructure", "4 - I
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Application", "2 - Application", "{631EAC36-149C-4A6E-8D2E-07BBE87BF8BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpDesk.ApiGateway.Application", "src\HelpDesk.ApiGateway.Application\HelpDesk.ApiGateway.Application.csproj", "{F296EB54-0E93-41B7-9974-8CD9917A2CE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpDesk.ApiGateway.Application", "src\HelpDesk.ApiGateway.Application\HelpDesk.ApiGateway.Application.csproj", "{F296EB54-0E93-41B7-9974-8CD9917A2CE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpDesk.ApiGateway.Infrastructure", "src\HelpDesk.ApiGateway.Infrastructure\HelpDesk.ApiGateway.Infrastructure.csproj", "{29278B1D-B167-4A19-B319-C3894745040C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpDesk.ApiGateway.Infrastructure", "src\HelpDesk.ApiGateway.Infrastructure\HelpDesk.ApiGateway.Infrastructure.csproj", "{29278B1D-B167-4A19-B319-C3894745040C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpDesk.ApiGateway.Persistence", "src\HelpDesk.ApiGateway.Persistence\HelpDesk.ApiGateway.Persistence.csproj", "{85C86E51-3FD8-4243-B354-CB42619EA117}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpDesk.ApiGateway.Persistence", "src\HelpDesk.ApiGateway.Persistence\HelpDesk.ApiGateway.Persistence.csproj", "{85C86E51-3FD8-4243-B354-CB42619EA117}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F870C9AB-D710-4074-A984-C69A738A725E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpDesk.ApiGateway.Application.UnitTests", "tests\HelpDesk.ApiGateway.Application.UnitTests\HelpDesk.ApiGateway.Application.UnitTests.csproj", "{CF5D254F-9C2B-4414-8956-19CCFED5C3C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpDesk.ApiGateway.Application.UnitTests", "tests\HelpDesk.ApiGateway.Application.UnitTests\HelpDesk.ApiGateway.Application.UnitTests.csproj", "{CF5D254F-9C2B-4414-8956-19CCFED5C3C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpDesk.ApiGateway.ArchitectureTests", "tests\HelpDesk.ApiGatewayService.ArchitectureTests\HelpDesk.ApiGateway.ArchitectureTests.csproj", "{9DC6F7C4-6D5A-4CFA-B932-D109D92ED4BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpDesk.ApiGateway.ArchitectureTests", "tests\HelpDesk.ApiGatewayService.ArchitectureTests\HelpDesk.ApiGateway.ArchitectureTests.csproj", "{9DC6F7C4-6D5A-4CFA-B932-D109D92ED4BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpDesk.ApiGateway.IntegrationTests", "tests\HelpDesk.ApiGateway.IntegrationTests\HelpDesk.ApiGateway.IntegrationTests.csproj", "{EF49F754-E441-436D-929C-50A238E6A4E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpDesk.ApiGateway.IntegrationTests", "tests\HelpDesk.ApiGateway.IntegrationTests\HelpDesk.ApiGateway.IntegrationTests.csproj", "{EF49F754-E441-436D-929C-50A238E6A4E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D4314E6A-33F6-4239-8509-0FCB2A2CD022}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpDesk.ProducerService.ArchitectureTests", "tests\HelpDesk.ProducerService.ArchitectureTests\HelpDesk.ProducerService.ArchitectureTests.csproj", "{41D7D470-632F-4128-B7A2-3D8D2A03C35A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpDesk.ProducerService.Persistence", "src\HelpDesk.ProducerService.Persistence\HelpDesk.ProducerService.Persistence.csproj", "{29CC59E4-DFEB-4E8D-A419-CF2BAB836AD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -194,6 +200,14 @@ Global
 		{EF49F754-E441-436D-929C-50A238E6A4E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF49F754-E441-436D-929C-50A238E6A4E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF49F754-E441-436D-929C-50A238E6A4E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41D7D470-632F-4128-B7A2-3D8D2A03C35A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41D7D470-632F-4128-B7A2-3D8D2A03C35A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41D7D470-632F-4128-B7A2-3D8D2A03C35A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41D7D470-632F-4128-B7A2-3D8D2A03C35A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29CC59E4-DFEB-4E8D-A419-CF2BAB836AD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29CC59E4-DFEB-4E8D-A419-CF2BAB836AD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29CC59E4-DFEB-4E8D-A419-CF2BAB836AD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29CC59E4-DFEB-4E8D-A419-CF2BAB836AD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -241,6 +255,9 @@ Global
 		{CF5D254F-9C2B-4414-8956-19CCFED5C3C8} = {F870C9AB-D710-4074-A984-C69A738A725E}
 		{9DC6F7C4-6D5A-4CFA-B932-D109D92ED4BB} = {F870C9AB-D710-4074-A984-C69A738A725E}
 		{EF49F754-E441-436D-929C-50A238E6A4E8} = {F870C9AB-D710-4074-A984-C69A738A725E}
+		{D4314E6A-33F6-4239-8509-0FCB2A2CD022} = {78F8C506-38AE-460C-B362-174ABE6947E6}
+		{41D7D470-632F-4128-B7A2-3D8D2A03C35A} = {D4314E6A-33F6-4239-8509-0FCB2A2CD022}
+		{29CC59E4-DFEB-4E8D-A419-CF2BAB836AD0} = {BD4871AB-AD4D-489A-BE86-E5DCE548F280}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1901C1E9-1D42-41EC-B158-D54D8B4C12D9}
