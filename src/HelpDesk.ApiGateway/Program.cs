@@ -11,6 +11,7 @@ using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using System.Net.Http;
 using System.Net;
+using Ocelot.Values;
 
 namespace HelpDesk.ApiGateway
 {
@@ -32,8 +33,12 @@ namespace HelpDesk.ApiGateway
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwagger();
 
-            builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+            builder.Configuration
+                   .AddJsonFile("SwaggerEndPoints.json", optional: false, reloadOnChange: true)
+                   .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+
             builder.Services.AddOcelot(builder.Configuration);
+            builder.Services.AddSwaggerForOcelot(builder.Configuration);
 
 
             var app = builder.Build();
@@ -44,14 +49,14 @@ namespace HelpDesk.ApiGateway
                 app.ConfigureSwagger();
             }
 
-            app.UseOcelot().Wait();
             app.EnsureDatabaseCreated();
             app.UseCustomExceptionHandler();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.MapControllers();
+            app.UseEndpoints(x => x.MapControllers());
+            app.UseOcelot();
 
             app.Run();
         }
