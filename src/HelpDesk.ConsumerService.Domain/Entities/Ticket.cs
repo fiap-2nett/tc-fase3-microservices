@@ -1,5 +1,4 @@
 using System;
-using HelpDesk.ConsumerService.Domain.Enumerations;
 using HelpDesk.Core.Domain.Abstractions;
 using HelpDesk.Core.Domain.Entities;
 using HelpDesk.Core.Domain.Enumerations;

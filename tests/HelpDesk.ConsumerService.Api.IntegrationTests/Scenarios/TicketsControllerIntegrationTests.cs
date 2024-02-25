@@ -9,7 +9,6 @@ using HelpDesk.Core.Domain.Errors;
 using HelpDesk.ConsumerService.Api.Contracts;
 using Microsoft.AspNetCore.TestHost;
 using HelpDesk.ConsumerService.Api.Controllers;
-using HelpDesk.ConsumerService.Domain.Enumerations;
 using HelpDesk.ConsumerService.Application.Contracts.Common;
 using HelpDesk.ConsumerService.Api.IntegrationTests.SeedWork;
 using HelpDesk.ConsumerService.Api.IntegrationTests.Fixtures;

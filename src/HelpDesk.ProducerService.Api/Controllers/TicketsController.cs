@@ -1,12 +1,14 @@
 using System;
 using System.Threading.Tasks;
-using HelpDesk.ConsumerService.Domain.Enumerations;
+using HelpDesk.Core.Domain.Authentication;
+using HelpDesk.Core.Domain.Enumerations;
 using HelpDesk.Core.Domain.Errors;
 using HelpDesk.Core.Domain.Exceptions;
 using HelpDesk.Core.Domain.Helpers;
 using HelpDesk.ProducerService.Api.Contracts;
 using HelpDesk.ProducerService.Api.Infrastructure;
 using HelpDesk.ProducerService.Application.Contracts.Tickets;
+using HelpDesk.ProducerService.Application.Core.Abstractions.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,10 +16,20 @@ namespace HelpDesk.ProducerService.Api.Controllers
 {
     public sealed class TicketsController : ApiController
     {
+        #region Read-Only Fields
+
+        private readonly ITicketService _ticketService;
+        private readonly IUserSessionProvider _userSessionProvider;
+
+        #endregion
+
         #region Constructors
 
-        public TicketsController()
-        { }
+        public TicketsController(ITicketService ticketService, IUserSessionProvider userSessionProvider)
+        {
+            _ticketService = ticketService ?? throw new ArgumentNullException(nameof(ticketService));
+            _userSessionProvider = userSessionProvider ?? throw new ArgumentNullException(nameof(userSessionProvider));
+        }
 
         #endregion
 
@@ -36,14 +48,12 @@ namespace HelpDesk.ProducerService.Api.Controllers
             if (createTicketRequest is null)
                 throw new DomainException(DomainErrors.Ticket.DataSentIsInvalid);
 
-            //var idTicket = await _ticketService.CreateAsync(createTicketRequest.IdCategory,
-            //    createTicketRequest.Description,
-            //    idUserRequester: _userSessionProvider.IdUser);
+            var idTicket = await _ticketService.CreateAsync(createTicketRequest.IdCategory,
+                createTicketRequest.Description,
+                idUserRequester: _userSessionProvider.IdUser);
 
-            //return Created(new Uri(Url.ActionLink(nameof(GetById), "Tickets", new { idTicket })), idTicket);
-
-            // TODO: Implementar lógica de envio ao RabbitMq com MassTransit
-            return Ok();
+            // TODO: Implementar lógica da Uri para microserviço de Consumer
+            return Created("", idTicket);
         }
 
         /// <summary>
@@ -56,10 +66,9 @@ namespace HelpDesk.ProducerService.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AssignToMe([FromRoute] int idTicket)
         {
-            //await _ticketService.AssignToUserAsync(idTicket,
-            //    idUserAssigned: _userSessionProvider.IdUser,
-            //    idUserPerformedAction: _userSessionProvider.IdUser);
-            // TODO: Implementar lógica de envio ao RabbitMq com MassTransit
+            await _ticketService.AssignToUserAsync(idTicket,
+                idUserAssigned: _userSessionProvider.IdUser,
+                idUserPerformedAction: _userSessionProvider.IdUser);
 
             return Ok();
         }
@@ -78,11 +87,10 @@ namespace HelpDesk.ProducerService.Api.Controllers
             if (updateTicketRequest is null)
                 throw new DomainException(DomainErrors.Ticket.DataSentIsInvalid);
 
-            //await _ticketService.UpdateAsync(idTicket,
-            //    updateTicketRequest.IdCategory,
-            //    updateTicketRequest.Description,
-            //    idUserPerformedAction: _userSessionProvider.IdUser);
-            // TODO: Implementar lógica de envio ao RabbitMq com MassTransit
+            await _ticketService.UpdateAsync(idTicket,
+                updateTicketRequest.IdCategory,
+                updateTicketRequest.Description,
+                idUserPerformedAction: _userSessionProvider.IdUser);
 
             return Ok();
         }
@@ -101,10 +109,9 @@ namespace HelpDesk.ProducerService.Api.Controllers
             if (cancelTicketRequest is null)
                 throw new DomainException(DomainErrors.Ticket.DataSentIsInvalid);
 
-            //await _ticketService.CancelAsync(idTicket,
-            //    cancelTicketRequest.CancellationReason,
-            //    idUserPerformedAction: _userSessionProvider.IdUser);
-            // TODO: Implementar lógica de envio ao RabbitMq com MassTransit
+            await _ticketService.CancelAsync(idTicket,
+                cancelTicketRequest.CancellationReason,
+                idUserPerformedAction: _userSessionProvider.IdUser);
 
             return Ok();
         }
@@ -123,10 +130,9 @@ namespace HelpDesk.ProducerService.Api.Controllers
             if (assignToRequest is null)
                 throw new DomainException(DomainErrors.Ticket.DataSentIsInvalid);
 
-            //await _ticketService.AssignToUserAsync(idTicket,
-            //    idUserAssigned: assignToRequest.IdUserAssigned,
-            //    idUserPerformedAction: _userSessionProvider.IdUser);
-            // TODO: Implementar lógica de envio ao RabbitMq com MassTransit
+            await _ticketService.AssignToUserAsync(idTicket,
+                idUserAssigned: assignToRequest.IdUserAssigned,
+                idUserPerformedAction: _userSessionProvider.IdUser);
 
             return Ok();
         }
@@ -141,8 +147,7 @@ namespace HelpDesk.ProducerService.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Complete([FromRoute] int idTicket)
         {
-            //await _ticketService.CompleteAsync(idTicket, _userSessionProvider.IdUser);
-            // TODO: Implementar lógica de envio ao RabbitMq com MassTransit
+            await _ticketService.CompleteAsync(idTicket, _userSessionProvider.IdUser);
 
             return Ok();
         }
@@ -164,8 +169,7 @@ namespace HelpDesk.ProducerService.Api.Controllers
             if (!EnumHelper.TryConvert(changeStatusRequest.IdStatus, out TicketStatuses changedStatus))
                 throw new DomainException(DomainErrors.Ticket.StatusDoesNotExist);
 
-            //await _ticketService.ChangeStatusAsync(idTicket, changedStatus, _userSessionProvider.IdUser);
-            // TODO: Implementar lógica de envio ao RabbitMq com MassTransit
+            await _ticketService.ChangeStatusAsync(idTicket, changedStatus, _userSessionProvider.IdUser);            
 
             return Ok();
         }

@@ -1,8 +1,13 @@
+using System;
 using System.Text;
+using HelpDesk.ConsumerService.Application.Consumers;
 using HelpDesk.Core.Domain.Abstractions;
 using HelpDesk.Core.Domain.Authentication;
 using HelpDesk.Core.Domain.Authentication.Settings;
 using HelpDesk.Core.Domain.Cryptography;
+using HelpDesk.Core.Domain.Events;
+using HelpDesk.Core.Domain.MessageBroker.Settings;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +19,9 @@ namespace HelpDesk.ConsumerService.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SettingsKey));
+            services.Configure<MessageBrokerSettings>(configuration.GetSection(MessageBrokerSettings.SettingsKey));
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -29,7 +37,22 @@ namespace HelpDesk.ConsumerService.Infrastructure
                     };
                 });
 
-            services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SettingsKey));
+            services.AddMassTransit(busConfigurator =>
+            {
+                busConfigurator.SetKebabCaseEndpointNameFormatter();
+                busConfigurator.AddConsumers(Application.AssemblyReference.Assembly);
+
+                busConfigurator.UsingRabbitMq((context, busFactoryConfigurator) =>
+                {                    
+                    busFactoryConfigurator.Host(new Uri(configuration["MessageBroker:Host"]), host =>
+                    {
+                        host.Username(configuration["MessageBroker:Username"]);
+                        host.Password(configuration["MessageBroker:Password"]);
+                    });
+
+                    busFactoryConfigurator.ConfigureEndpoints(context);
+                });
+            });
 
             services.AddScoped<IUserSessionProvider, UserSessionProvider>();
             services.AddScoped<IJwtProvider, JwtProvider>();

@@ -8,9 +8,9 @@ using Moq.EntityFrameworkCore;
 using System.Collections.Generic;
 using HelpDesk.Core.Domain.Extensions;
 using HelpDesk.ConsumerService.Domain.Entities;
-using HelpDesk.ConsumerService.Domain.Enumerations;
 using HelpDesk.ConsumerService.Application.Services;
 using HelpDesk.ConsumerService.Application.Core.Abstractions.Data;
+using HelpDesk.Core.Domain.Enumerations;
 
 namespace HelpDesk.ConsumerService.Application.UnitTests.Scenarios
 {

@@ -1,4 +1,4 @@
-namespace HelpDesk.ConsumerService.Domain.Enumerations
+namespace HelpDesk.Core.Domain.Enumerations
 {
     public enum TicketStatuses : byte
     {

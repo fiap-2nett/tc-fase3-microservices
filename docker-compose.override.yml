@@ -15,6 +15,9 @@ services:
     # volumes:
     #   - ./.containers/rabbitmq/data/:/var/lib/rabbitmq
     #   - ./.containers/rabbitmq/log/:/var/log/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
@@ -31,8 +34,7 @@ services:
       - Jwt__Security=WvvWzuqwJ5DvDGaRRVnKCuL2k35aEhiY0qoKR7qj0gVn3f6PxwPnhbB2VPp82gLH
       - Jwt__TokenExpirationInMinutes=60
     depends_on:
-      - helpdesk.db
-      - helpdesk.mq
+      - helpdesk.db      
     ports:
       - "5000:443"
     volumes:
@@ -50,6 +52,9 @@ services:
       - Jwt__Audience=https://localhost:5000/
       - Jwt__Security=WvvWzuqwJ5DvDGaRRVnKCuL2k35aEhiY0qoKR7qj0gVn3f6PxwPnhbB2VPp82gLH
       - Jwt__TokenExpirationInMinutes=60
+      - MessageBroker__Host=amqp://helpdesk.mq:5672
+      - MessageBroker__Username=guest
+      - MessageBroker__Password=guest
     depends_on:
       - helpdesk.db
       - helpdesk.mq
@@ -70,6 +75,9 @@ services:
       - Jwt__Audience=https://localhost:5000/
       - Jwt__Security=WvvWzuqwJ5DvDGaRRVnKCuL2k35aEhiY0qoKR7qj0gVn3f6PxwPnhbB2VPp82gLH
       - Jwt__TokenExpirationInMinutes=60
+      - MessageBroker__Host=amqp://helpdesk.mq:5672
+      - MessageBroker__Username=guest
+      - MessageBroker__Password=guest
     depends_on:
       - helpdesk.db
       - helpdesk.mq

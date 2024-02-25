@@ -8,7 +8,6 @@ using HelpDesk.ConsumerService.Application.Contracts.Tickets;
 using HelpDesk.ConsumerService.Application.Core.Abstractions.Data;
 using HelpDesk.ConsumerService.Application.Core.Abstractions.Services;
 using HelpDesk.ConsumerService.Domain.Entities;
-using HelpDesk.ConsumerService.Domain.Enumerations;
 using HelpDesk.ConsumerService.Domain.Repositories;
 using HelpDesk.Core.Domain.Enumerations;
 using HelpDesk.Core.Domain.Errors;
