@@ -1,3 +1,5 @@
+[![tc-fase3-microservices](https://github.com/fiap-2nett/tc-fase3-microservices/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/fiap-2nett/tc-fase3-microservices/actions/workflows/dotnet.yml)
+
 # TechChallenge - HelpDesk API Microservices
 
 A HelpDesk API é uma plataforma de gerenciamento de tickets que visa aprimorar a gestão operacional,
@@ -109,7 +111,7 @@ de acesso, são eles:
 | ailton@techchallenge.app  | Ailton@123  | Geral         |
 | bruno@techchallenge.app   | Bruno@123   | Analista      |
 | cecilia@techchallenge.app | Cecilia@123 | Geral         |
-| cesar@techchallenge.app   | Cesar@123   | Analista      | 
+| cesar@techchallenge.app   | Cesar@123   | Analista      |
 | paulo@techchallenge.app   | Paulo@123   | Geral         |
 
 Caso queira você poderá criar o seu próprio usuário através do endpoint:
