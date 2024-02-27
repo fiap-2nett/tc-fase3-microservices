@@ -6,6 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
+using Ocelot.Values;
+using System.Net.Http;
+using System.Security.Authentication;
 
 namespace HelpDesk.ApiGateway
 {
@@ -25,14 +31,26 @@ namespace HelpDesk.ApiGateway
             builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
             builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerForOcelot(builder.Configuration);
             builder.Services.AddSwagger();
+
+            builder.Configuration
+                   .AddJsonFile("producer.json", optional: false, reloadOnChange: true)
+                   .AddJsonFile("consumer.json", optional: false, reloadOnChange: true)
+                   .AddJsonFile("SwaggerEndPoints.json", optional: false, reloadOnChange: true);
+
+            builder.Services.AddOcelot(builder.Configuration);
 
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.ConfigureSwagger();
+                app.UseSwagger();
+                app.UseSwaggerForOcelotUI(option =>
+                {
+                    option.PathToSwaggerGenerator = "/swagger/docs";
+                });
             }
 
             app.EnsureDatabaseCreated();
@@ -41,7 +59,8 @@ namespace HelpDesk.ApiGateway
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.MapControllers();
+            app.UseEndpoints(x => x.MapControllers());
+            app.UseOcelot();
 
             app.Run();
         }

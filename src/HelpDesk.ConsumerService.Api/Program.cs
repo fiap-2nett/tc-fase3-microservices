@@ -1,3 +1,4 @@
+using System.Net;
 using HelpDesk.ConsumerService.Api.Extensions;
 using HelpDesk.ConsumerService.Application;
 using HelpDesk.ConsumerService.Infrastructure;
