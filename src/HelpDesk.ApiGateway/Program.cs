@@ -33,7 +33,8 @@ namespace HelpDesk.ApiGateway
 
             builder.Configuration
                    .AddJsonFile("SwaggerEndPoints.json", optional: false, reloadOnChange: true)
-                   .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+                   .AddJsonFile("producer.json", optional: false, reloadOnChange: true)
+                   .AddJsonFile("consumer.json", optional: false, reloadOnChange: true);
 
             builder.Services.AddOcelot(builder.Configuration);
 
