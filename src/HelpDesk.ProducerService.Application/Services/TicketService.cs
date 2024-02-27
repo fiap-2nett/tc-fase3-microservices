@@ -6,6 +6,7 @@ using HelpDesk.Core.Domain.Events;
 using HelpDesk.Core.Domain.Exceptions;
 using HelpDesk.ProducerService.Application.Core.Abstractions.EventBus;
 using HelpDesk.ProducerService.Application.Core.Abstractions.Services;
+using HelpDesk.ProducerService.Application.Validators;
 using HelpDesk.ProducerService.Domain.Repositories;
 
 namespace HelpDesk.ProducerService.Application.Services
@@ -46,7 +47,10 @@ namespace HelpDesk.ProducerService.Application.Services
             if (category is null)
                 throw new NotFoundException(DomainErrors.Category.NotFound);
 
-            await _eventBus.PublishAsync(new CreateTicketEvent(category.IdCategory, userRequester.IdUser, description));
+            CreateTicketEventValidator.ValidateAndThrow(category, userRequester, description,
+                out CreateTicketEvent @event);
+
+            await _eventBus.PublishAsync(@event);
         }
 
         public async Task UpdateAsync(int idTicket, int idCategory, string description, int idUserPerformedAction)
@@ -63,7 +67,11 @@ namespace HelpDesk.ProducerService.Application.Services
             if (ticket is null)
                 throw new NotFoundException(DomainErrors.Ticket.NotFound);
 
-            //TODO: Implementar validações e comunição com MasstTransit [UpdateTicketEvent]
+            UpdateTicketEventValidator.ValidateAndThrow(ticket, category, description, userPerformedAction,
+                out UpdateTicketEvent @event);
+
+            //TODO: Implementar o consumer do MasstTransit [UpdateTicketEvent]
+            await _eventBus.PublishAsync(@event);
         }
 
         public async Task CancelAsync(int idTicket, string cancellationReason, int idUserPerformedAction)
@@ -76,7 +84,11 @@ namespace HelpDesk.ProducerService.Application.Services
             if (ticket is null)
                 throw new NotFoundException(DomainErrors.Ticket.NotFound);
 
-            //TODO: Implementar validações e comunição com MasstTransit [CancelTicketEvent]
+            CancelTicketEventValidator.ValidateAndThrow(ticket, cancellationReason, userPerformedAction,
+                out CancelTicketEvent @event);
+
+            //TODO: Implementar o consumer do MasstTransit [CancelTicketEvent]
+            await _eventBus.PublishAsync(@event);
         }
 
         public async Task ChangeStatusAsync(int idTicket, TicketStatuses changedStatus, int idUserPerformedAction)
@@ -88,10 +100,14 @@ namespace HelpDesk.ProducerService.Application.Services
             var ticket = await _ticketRepository.GetByIdAsync(idTicket);
             if (ticket is null)
                 throw new NotFoundException(DomainErrors.Ticket.NotFound);
+            
+            ChangeStatusTicketEventValidator.ValidateAndThrow(ticket, changedStatus, userPerformedAction,
+                out ChangeStatusTicketEvent @event);
 
-            //TODO: Implementar validações e comunição com MasstTransit [ChangeStatusTicketEvent]
+            //TODO: Implementar o consumer do MasstTransit [ChangeStatusTicketEvent]
+            await _eventBus.PublishAsync(@event);
         }
-
+        
         public async Task AssignToUserAsync(int idTicket, int idUserAssigned, int idUserPerformedAction)
         {
             var userAssigned = await _userRepository.GetByIdAsync(idUserAssigned);
@@ -106,7 +122,11 @@ namespace HelpDesk.ProducerService.Application.Services
             if (ticket is null)
                 throw new NotFoundException(DomainErrors.Ticket.NotFound);
 
-            //TODO: Implementar validações e comunição com MasstTransit [AssignToUserTicketEvent]
+            AssignToUserTicketEventValidator.ValidateAndThrow(ticket, userAssigned, userPerformedAction,
+                out AssignToUserTicketEvent @event);
+
+            //TODO: Implementar o consumer do MasstTransit [AssignToUserTicketEvent]
+            await _eventBus.PublishAsync(@event);
         }
 
         public async Task CompleteAsync(int idTicket, int idUserPerformedAction)
@@ -119,7 +139,11 @@ namespace HelpDesk.ProducerService.Application.Services
             if (ticket is null)
                 throw new NotFoundException(DomainErrors.Ticket.NotFound);
 
-            //TODO: Implementar validações e comunição com MasstTransit [CompleteTicketEvent]
+            CompleteTicketEventValidator.ValidateAndThrow(ticket, userPerformedAction,
+                out CompleteTicketEvent @event);
+
+            //TODO: Implementar o consumer do MasstTransit [CompleteTicketEvent]
+            await _eventBus.PublishAsync(@event);
         }
 
         #endregion

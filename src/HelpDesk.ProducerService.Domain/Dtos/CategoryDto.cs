@@ -1,4 +1,4 @@
 namespace HelpDesk.ProducerService.Domain.Dtos
 {
-    public sealed record CategoryDto(int IdCategory);
+    public sealed record CategoryDto(int IdCategory, string Name);
 }

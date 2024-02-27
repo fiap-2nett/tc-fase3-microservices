@@ -106,6 +106,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpDesk.ProducerService.Ar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpDesk.ProducerService.Persistence", "src\HelpDesk.ProducerService.Persistence\HelpDesk.ProducerService.Persistence.csproj", "{29CC59E4-DFEB-4E8D-A419-CF2BAB836AD0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpDesk.ProducerService.Application.UnitTests", "tests\HelpDesk.ProducerService.Application.UnitTests\HelpDesk.ProducerService.Application.UnitTests.csproj", "{99991096-790F-4234-81C9-C50F40338004}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -208,6 +210,10 @@ Global
 		{29CC59E4-DFEB-4E8D-A419-CF2BAB836AD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29CC59E4-DFEB-4E8D-A419-CF2BAB836AD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29CC59E4-DFEB-4E8D-A419-CF2BAB836AD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99991096-790F-4234-81C9-C50F40338004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99991096-790F-4234-81C9-C50F40338004}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99991096-790F-4234-81C9-C50F40338004}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99991096-790F-4234-81C9-C50F40338004}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -258,6 +264,7 @@ Global
 		{D4314E6A-33F6-4239-8509-0FCB2A2CD022} = {78F8C506-38AE-460C-B362-174ABE6947E6}
 		{41D7D470-632F-4128-B7A2-3D8D2A03C35A} = {D4314E6A-33F6-4239-8509-0FCB2A2CD022}
 		{29CC59E4-DFEB-4E8D-A419-CF2BAB836AD0} = {BD4871AB-AD4D-489A-BE86-E5DCE548F280}
+		{99991096-790F-4234-81C9-C50F40338004} = {D4314E6A-33F6-4239-8509-0FCB2A2CD022}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1901C1E9-1D42-41EC-B158-D54D8B4C12D9}

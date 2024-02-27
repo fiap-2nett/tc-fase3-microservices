@@ -44,7 +44,7 @@ namespace HelpDesk.ProducerService.Persistence.Repositories
 
                     var response = await httpClient.GetAsync($"{idTicket}");
                     response.EnsureSuccessStatusCode();
-
+                    
                     return await response.Content.ReadFromJsonAsync<TicketDto>();
                 }
             }
