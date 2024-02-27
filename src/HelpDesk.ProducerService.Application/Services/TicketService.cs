@@ -4,9 +4,9 @@ using HelpDesk.Core.Domain.Enumerations;
 using HelpDesk.Core.Domain.Errors;
 using HelpDesk.Core.Domain.Events;
 using HelpDesk.Core.Domain.Exceptions;
-using HelpDesk.Core.Domain.Extensions;
 using HelpDesk.ProducerService.Application.Core.Abstractions.EventBus;
 using HelpDesk.ProducerService.Application.Core.Abstractions.Services;
+using HelpDesk.ProducerService.Application.Validators;
 using HelpDesk.ProducerService.Domain.Repositories;
 
 namespace HelpDesk.ProducerService.Application.Services
@@ -47,7 +47,10 @@ namespace HelpDesk.ProducerService.Application.Services
             if (category is null)
                 throw new NotFoundException(DomainErrors.Category.NotFound);
 
-            await _eventBus.PublishAsync(new CreateTicketEvent(category.IdCategory, userRequester.IdUser, description));
+            CreateTicketEventValidator.ValidateAndThrow(category, userRequester, description,
+                out CreateTicketEvent @event);
+
+            await _eventBus.PublishAsync(@event);
         }
 
         public async Task UpdateAsync(int idTicket, int idCategory, string description, int idUserPerformedAction)
@@ -64,9 +67,11 @@ namespace HelpDesk.ProducerService.Application.Services
             if (ticket is null)
                 throw new NotFoundException(DomainErrors.Ticket.NotFound);
 
+            UpdateTicketEventValidator.ValidateAndThrow(ticket, category, description, userPerformedAction,
+                out UpdateTicketEvent @event);
+
             //TODO: Implementar o consumer do MasstTransit [UpdateTicketEvent]
-            await _eventBus.PublishAsync(new UpdateTicketEvent(ticket.IdTicket, category.IdCategory,
-                description, userPerformedAction.IdUser));
+            await _eventBus.PublishAsync(@event);
         }
 
         public async Task CancelAsync(int idTicket, string cancellationReason, int idUserPerformedAction)
@@ -79,12 +84,11 @@ namespace HelpDesk.ProducerService.Application.Services
             if (ticket is null)
                 throw new NotFoundException(DomainErrors.Ticket.NotFound);
 
-            if (cancellationReason.IsNullOrWhiteSpace())
-                throw new DomainException(DomainErrors.Ticket.CancellationReasonIsRequired);
+            CancelTicketEventValidator.ValidateAndThrow(ticket, cancellationReason, userPerformedAction,
+                out CancelTicketEvent @event);
 
             //TODO: Implementar o consumer do MasstTransit [CancelTicketEvent]
-            await _eventBus.PublishAsync(new CancelTicketEvent(ticket.IdTicket, cancellationReason,
-                userPerformedAction.IdUser));
+            await _eventBus.PublishAsync(@event);
         }
 
         public async Task ChangeStatusAsync(int idTicket, TicketStatuses changedStatus, int idUserPerformedAction)
@@ -96,15 +100,14 @@ namespace HelpDesk.ProducerService.Application.Services
             var ticket = await _ticketRepository.GetByIdAsync(idTicket);
             if (ticket is null)
                 throw new NotFoundException(DomainErrors.Ticket.NotFound);
-
-            if (ticket.TicketStatus == TicketStatuses.Completed || ticket.TicketStatus == TicketStatuses.Cancelled)
-                throw new DomainException(DomainErrors.Ticket.HasAlreadyBeenCompletedOrCancelled);
+            
+            ChangeStatusTicketEventValidator.ValidateAndThrow(ticket, changedStatus, userPerformedAction,
+                out ChangeStatusTicketEvent @event);
 
             //TODO: Implementar o consumer do MasstTransit [ChangeStatusTicketEvent]
-            await _eventBus.PublishAsync(new ChangeStatusTicketEvent(ticket.IdTicket, changedStatus,
-                userPerformedAction.IdUser));
+            await _eventBus.PublishAsync(@event);
         }
-
+        
         public async Task AssignToUserAsync(int idTicket, int idUserAssigned, int idUserPerformedAction)
         {
             var userAssigned = await _userRepository.GetByIdAsync(idUserAssigned);
@@ -119,9 +122,11 @@ namespace HelpDesk.ProducerService.Application.Services
             if (ticket is null)
                 throw new NotFoundException(DomainErrors.Ticket.NotFound);
 
+            AssignToUserTicketEventValidator.ValidateAndThrow(ticket, userAssigned, userPerformedAction,
+                out AssignToUserTicketEvent @event);
+
             //TODO: Implementar o consumer do MasstTransit [AssignToUserTicketEvent]
-            await _eventBus.PublishAsync(new AssignToUserTicketEvent(ticket.IdTicket, userAssigned.IdUser,
-                userPerformedAction.IdUser));
+            await _eventBus.PublishAsync(@event);
         }
 
         public async Task CompleteAsync(int idTicket, int idUserPerformedAction)
@@ -134,8 +139,11 @@ namespace HelpDesk.ProducerService.Application.Services
             if (ticket is null)
                 throw new NotFoundException(DomainErrors.Ticket.NotFound);
 
+            CompleteTicketEventValidator.ValidateAndThrow(ticket, userPerformedAction,
+                out CompleteTicketEvent @event);
+
             //TODO: Implementar o consumer do MasstTransit [CompleteTicketEvent]
-            await _eventBus.PublishAsync(new CompleteTicketEvent(ticket.IdTicket, userPerformedAction.IdUser));
+            await _eventBus.PublishAsync(@event);
         }
 
         #endregion

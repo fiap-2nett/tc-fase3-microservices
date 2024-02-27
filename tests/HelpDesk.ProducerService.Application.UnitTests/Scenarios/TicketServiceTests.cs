@@ -4,20 +4,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using HelpDesk.Core.Domain.Cryptography;
-using HelpDesk.Core.Domain.Entities;
 using HelpDesk.Core.Domain.Enumerations;
 using HelpDesk.Core.Domain.Errors;
+using HelpDesk.Core.Domain.Events;
 using HelpDesk.Core.Domain.Exceptions;
-using HelpDesk.Core.Domain.Extensions;
-using HelpDesk.Core.Domain.ValueObjects;
 using HelpDesk.ProducerService.Application.Core.Abstractions.EventBus;
+using HelpDesk.ProducerService.Application.Services;
 using HelpDesk.ProducerService.Application.UnitTests.TestEntities;
 using HelpDesk.ProducerService.Domain.Dtos;
 using HelpDesk.ProducerService.Domain.Repositories;
 using Moq;
 using Xunit;
-using HelpDesk.ProducerService.Application.Services;
-using HelpDesk.Core.Domain.Events;
 
 namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
 {
@@ -71,7 +68,7 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
 
             _userRepositoryMock.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
             _categoryRepositoryMock.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Never);
-            _eventBusMock.Verify(x => x.PublishAsync(It.IsAny<CreateTicketEvent>(), It.IsAny<CancellationToken>()), Times.Never);            
+            _eventBusMock.Verify(x => x.PublishAsync(It.IsAny<CreateTicketEvent>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Fact]
@@ -136,9 +133,9 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
                 _userRepositoryMock.Object, _categoryRepositoryMock.Object);
 
             // Act
-            var action = () => ticketService.CreateAsync(idCategory: CategoryList().FirstOrDefault().IdCategory,
+            await ticketService.CreateAsync(idCategory: CategoryList().FirstOrDefault().IdCategory,
                 description: "Lorem ipsum dolor sit amet.", idUserRequester: UserA.IdUser);
-            
+
             // Assert
             _userRepositoryMock.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
             _categoryRepositoryMock.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
@@ -163,7 +160,7 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
             // Act
             var action = () => ticketService.UpdateAsync(
                 idTicket: targetTicket.IdTicket,
-                idCategory: targetTicket.IdCategory,
+                idCategory: targetTicket.Category.IdCategory,
                 description: targetTicket.Description,
                 idUserPerformedAction: targetTicket.IdUserRequester);
 
@@ -193,7 +190,7 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
             // Act
             var action = () => ticketService.UpdateAsync(
                 idTicket: targetTicket.IdTicket,
-                idCategory: targetTicket.IdCategory,
+                idCategory: targetTicket.Category.IdCategory,
                 description: targetTicket.Description,
                 idUserPerformedAction: targetTicket.IdUserRequester);
 
@@ -224,7 +221,7 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
             // Act
             var action = () => ticketService.UpdateAsync(
                 idTicket: int.MaxValue,
-                idCategory: targetTicket.IdCategory,
+                idCategory: targetTicket.Category.IdCategory,
                 description: targetTicket.Description,
                 idUserPerformedAction: targetTicket.IdUserRequester);
 
@@ -258,7 +255,7 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
             // Act
             var action = () => ticketService.UpdateAsync(
                 idTicket: targetTicket.IdTicket,
-                idCategory: targetTicket.IdCategory,
+                idCategory: targetTicket.Category.IdCategory,
                 description: description,
                 idUserPerformedAction: targetTicket.IdUserRequester);
 
@@ -289,7 +286,7 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
             // Act
             var action = () => ticketService.UpdateAsync(
                 idTicket: targetTicket.IdTicket,
-                idCategory: targetTicket.IdCategory,
+                idCategory: targetTicket.Category.IdCategory,
                 description: targetTicket.Description,
                 idUserPerformedAction: UserB.IdUser);
 
@@ -322,7 +319,7 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
             // Act
             var action = () => ticketService.UpdateAsync(
                 idTicket: targetTicket.IdTicket,
-                idCategory: targetTicket.IdCategory,
+                idCategory: targetTicket.Category.IdCategory,
                 description: targetTicket.Description,
                 idUserPerformedAction: targetTicket.IdUserRequester);
 
@@ -361,9 +358,6 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
                 idUserPerformedAction: userPerformedAction.IdUser);
 
             // Assert
-            targetTicket.IdCategory.Should().Be(changedCategory.IdCategory);
-            targetTicket.Description.Should().Be(updatedTicketDescription);
-
             _userRepositoryMock.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
             _categoryRepositoryMock.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
             _ticketRepositoryMock.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
@@ -524,7 +518,7 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
         public async Task ChangeStatusAsync_Should_ThrowDomainException_WhenHasStatusNotAllowed(TicketStatuses changedStatus)
         {
             // Arrange
-            var targetTicket = TicketList().FirstOrDefault(x => x.TicketStatus == TicketStatuses.Assigned);
+            var targetTicket = TicketList().FirstOrDefault(x => x.Status.IdStatus == (byte)TicketStatuses.Assigned);
             var userAssigned = UserList().FirstOrDefault(x => x.IdUser == targetTicket.IdUserAssigned);
 
             _userRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(userAssigned);
@@ -553,7 +547,7 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
         public async Task ChangeStatusAsync_Should_Return_WhenValidParameters()
         {
             // Arrange
-            var targetTicket = TicketList().FirstOrDefault(x => x.TicketStatus == TicketStatuses.Assigned);
+            var targetTicket = TicketList().FirstOrDefault(x => x.Status.IdStatus == (byte)TicketStatuses.Assigned);
             var userAssigned = UserList().FirstOrDefault(x => x.IdUser == targetTicket.IdUserAssigned);
 
             _userRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(userAssigned);
@@ -771,7 +765,7 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
         public async Task AssignToUserAsync_Should_ThrowInvalidPermissionException_WhenTicketStatusIsAssignedAndUserPerformedActionIsNotAdministratorOrAssignedUser()
         {
             // Arrange
-            var targetTicket = TicketList().FirstOrDefault(x => x.TicketStatus == TicketStatuses.Assigned);
+            var targetTicket = TicketList().FirstOrDefault(x => x.Status.IdStatus == (byte)TicketStatuses.Assigned);
             var idUserAssigned = AnalystB.IdUser;
             var idUserPerformedAction = AnalystB.IdUser;
 
@@ -812,9 +806,6 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
             await ticketService.AssignToUserAsync(targetTicket.IdTicket, idUserAssigned, idUserPerformedAction);
 
             // Assert
-            targetTicket.IdUserAssigned.Should().Be(idUserAssigned);
-            targetTicket.TicketStatus.Should().Be(TicketStatuses.Assigned);
-
             _userRepositoryMock.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Exactly(2));
             _ticketRepositoryMock.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
             _eventBusMock.Verify(x => x.PublishAsync(It.IsAny<AssignToUserTicketEvent>(), It.IsAny<CancellationToken>()), Times.Once);
@@ -905,7 +896,7 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
         public async Task CompleteAsync_Should_ThrowInvalidPermissionException_WhenUserPerformedActionIsNotAssignedUser()
         {
             // Arrange
-            var targetTicket = TicketList().FirstOrDefault(x => x.TicketStatus == TicketStatuses.Assigned);
+            var targetTicket = TicketList().FirstOrDefault(x => x.Status.IdStatus == (byte)TicketStatuses.Assigned);
             var idUserPerformedAction = AnalystB.IdUser;
 
             _userRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<int>())).ReturnsAsync((int idUser) => UserList().FirstOrDefault(x => x.IdUser == idUser));
@@ -985,7 +976,7 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
         public async Task CompleteAsync_Should_Return_WhenValidParameters()
         {
             // Arrange
-            var targetTicket = TicketList().FirstOrDefault(x => x.TicketStatus == TicketStatuses.Assigned);
+            var targetTicket = TicketList().FirstOrDefault(x => x.Status.IdStatus == (byte)TicketStatuses.Assigned);
             var idUserPerformedAction = AnalystA.IdUser;
 
             _userRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<int>())).ReturnsAsync((int idUser) => UserList().FirstOrDefault(x => x.IdUser == idUser));
@@ -1091,7 +1082,7 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
         public async Task CancelAsync_Should_ThrowInvalidPermissionException_WhenUserPerformedActionIsAnalystAndNotUserRequesterOrUserAssigned()
         {
             // Arrange
-            var targetTicket = TicketList().FirstOrDefault(x => x.TicketStatus == TicketStatuses.Assigned);
+            var targetTicket = TicketList().FirstOrDefault(x => x.Status.IdStatus == (byte)TicketStatuses.Assigned);
             var idUserPerformedAction = AnalystB.IdUser;
             var cancellationReason = "Lorem ipsum dolor sit amet.";
 
@@ -1121,7 +1112,7 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
         public async Task CancelAsync_Should_ThrowDomainException_WhenCancellationReasonIsNullOrWhiteSpace(string cancellationReason)
         {
             // Arrange
-            var targetTicket = TicketList().FirstOrDefault(x => x.TicketStatus == TicketStatuses.Assigned);
+            var targetTicket = TicketList().FirstOrDefault(x => x.Status.IdStatus == (byte)TicketStatuses.Assigned);
             var idUserPerformedAction = targetTicket.IdUserRequester;
 
             _userRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<int>())).ReturnsAsync((int idUser) => UserList().FirstOrDefault(x => x.IdUser == idUser));
@@ -1176,7 +1167,7 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
         public async Task CancelAsync_Should_Return_WhenValidParameters()
         {
             // Arrange
-            var targetTicket = TicketList().FirstOrDefault(x => x.TicketStatus == TicketStatuses.Assigned);
+            var targetTicket = TicketList().FirstOrDefault(x => x.Status.IdStatus == (byte)TicketStatuses.Assigned);
             var idUserPerformedAction = AnalystA.IdUser;
             var cancellationReason = "Lorem ipsum dolor sit amet.";
 
@@ -1189,7 +1180,7 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
             // Act
             await ticketService.CancelAsync(targetTicket.IdTicket, cancellationReason, idUserPerformedAction);
 
-            // Assert            
+            // Assert
             _userRepositoryMock.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
             _ticketRepositoryMock.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
             _eventBusMock.Verify(x => x.PublishAsync(It.IsAny<CancelTicketEvent>(), It.IsAny<CancellationToken>()), Times.Once);
@@ -1203,43 +1194,43 @@ namespace HelpDesk.ProducerService.Application.UnitTests.Scenarios
 
         private IEnumerable<CategoryDto> CategoryList()
         {
-            yield return new CategoryDto(1);
-            yield return new CategoryDto(2);
-            yield return new CategoryDto(3);
-            yield return new CategoryDto(4);
+            yield return new CategoryDto(IdCategory: 1, Name: "Indisponibilidade");
+            yield return new CategoryDto(IdCategory: 2, Name: "Lentidão");
+            yield return new CategoryDto(IdCategory: 3, Name: "Requisição");
+            yield return new CategoryDto(IdCategory: 4, Name: "Dúvida");
         }
 
         private IEnumerable<TicketDto> TicketList()
         {
-            yield return new TicketDto(10_100, IdCategory: CategoryList().FirstOrDefault().IdCategory, Description: "Lorem ipsum dolor sit amet.", IdUserRequester: UserA.IdUser);
-            yield return new TicketDto(10_101, IdCategory: CategoryList().FirstOrDefault().IdCategory, Description: "Lorem ipsum dolor sit amet.", IdUserRequester: UserA.IdUser, IdUserAssigned: AnalystA.IdUser, TicketStatus: TicketStatuses.Assigned);
-            yield return new TicketDto(10_102, IdCategory: CategoryList().FirstOrDefault().IdCategory, Description: "Lorem ipsum dolor sit amet.", IdUserRequester: UserA.IdUser, IdUserAssigned: AnalystA.IdUser, TicketStatus: TicketStatuses.Completed);
-            yield return new TicketDto(10_103, IdCategory: CategoryList().FirstOrDefault().IdCategory, Description: "Lorem ipsum dolor sit amet.", IdUserRequester: UserA.IdUser, IdUserAssigned: AnalystA.IdUser, TicketStatus: TicketStatuses.Cancelled);
-                               
-            yield return new TicketDto(10_200, IdCategory: CategoryList().FirstOrDefault().IdCategory, Description: "Lorem ipsum dolor sit amet.", IdUserRequester: UserB.IdUser);
-            yield return new TicketDto(10_201, IdCategory: CategoryList().FirstOrDefault().IdCategory, Description: "Lorem ipsum dolor sit amet.", IdUserRequester: UserB.IdUser, IdUserAssigned: AnalystB.IdUser, TicketStatus: TicketStatuses.Assigned);
-                               
-            yield return new TicketDto(10_300, IdCategory: CategoryList().FirstOrDefault().IdCategory, Description: "Lorem ipsum dolor sit amet.", IdUserRequester: AnalystA.IdUser);
-            yield return new TicketDto(10_301, IdCategory: CategoryList().FirstOrDefault().IdCategory, Description: "Lorem ipsum dolor sit amet.", IdUserRequester: AnalystA.IdUser, IdUserAssigned: AnalystB.IdUser, TicketStatus: TicketStatuses.Assigned);
-                               
-            yield return new TicketDto(10_400, IdCategory: CategoryList().FirstOrDefault().IdCategory, Description: "Lorem ipsum dolor sit amet.", IdUserRequester: AnalystB.IdUser);
-            yield return new TicketDto(10_401, IdCategory: CategoryList().FirstOrDefault().IdCategory, Description: "Lorem ipsum dolor sit amet.", IdUserRequester: AnalystB.IdUser, IdUserAssigned: AnalystA.IdUser, TicketStatus: TicketStatuses.Assigned);
+            yield return TicketTestDto.Create(10_100, category: CategoryList().FirstOrDefault(), description: "Lorem ipsum dolor sit amet.", userRequester: UserA);
+            yield return TicketTestDto.Create(10_101, category: CategoryList().FirstOrDefault(), description: "Lorem ipsum dolor sit amet.", userRequester: UserA, userAssigned: AnalystA);
+            yield return TicketTestDto.Create(10_102, category: CategoryList().FirstOrDefault(), description: "Lorem ipsum dolor sit amet.", userRequester: UserA, userAssigned: AnalystA, toComplete: true);
+            yield return TicketTestDto.Create(10_103, category: CategoryList().FirstOrDefault(), description: "Lorem ipsum dolor sit amet.", userRequester: UserA, userAssigned: AnalystA, toCancelled: true);
+
+            yield return TicketTestDto.Create(10_200, category: CategoryList().FirstOrDefault(), description: "Lorem ipsum dolor sit amet.", userRequester: UserB);
+            yield return TicketTestDto.Create(10_201, category: CategoryList().FirstOrDefault(), description: "Lorem ipsum dolor sit amet.", userRequester: UserB, userAssigned: AnalystB);
+
+            yield return TicketTestDto.Create(10_300, category: CategoryList().FirstOrDefault(), description: "Lorem ipsum dolor sit amet.", userRequester: AnalystA);
+            yield return TicketTestDto.Create(10_301, category: CategoryList().FirstOrDefault(), description: "Lorem ipsum dolor sit amet.", userRequester: AnalystA, userAssigned: AnalystB);
+
+            yield return TicketTestDto.Create(10_400, category: CategoryList().FirstOrDefault(), description: "Lorem ipsum dolor sit amet.", userRequester: AnalystB);
+            yield return TicketTestDto.Create(10_401, category: CategoryList().FirstOrDefault(), description: "Lorem ipsum dolor sit amet.", userRequester: AnalystB, userAssigned: AnalystA);
         }
 
         private UserDto Admin
-            => new UserDto(1);
+            => new UserDto(1, UserRoles.Administrator);
 
         private UserDto UserA
-            => new UserDto(2);
+            => new UserDto(2, UserRoles.General);
 
         private UserDto UserB
-            => new UserDto(3);
+            => new UserDto(3, UserRoles.General);
 
         private UserDto AnalystA
-            => new UserDto(4);
+            => new UserDto(4, UserRoles.Analyst);
 
         private UserDto AnalystB
-            => new UserDto(5);
+            => new UserDto(5, UserRoles.Analyst);
 
         private IEnumerable<UserDto> UserList()
         {
