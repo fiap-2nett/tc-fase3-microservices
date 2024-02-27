@@ -9,6 +9,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Values;
+using System.Net.Http;
+using System.Security.Authentication;
 
 namespace HelpDesk.ApiGateway
 {
@@ -32,9 +35,9 @@ namespace HelpDesk.ApiGateway
             builder.Services.AddSwagger();
 
             builder.Configuration
-                   .AddJsonFile("SwaggerEndPoints.json", optional: false, reloadOnChange: true)
                    .AddJsonFile("producer.json", optional: false, reloadOnChange: true)
-                   .AddJsonFile("consumer.json", optional: false, reloadOnChange: true);
+                   .AddJsonFile("consumer.json", optional: false, reloadOnChange: true)
+                   .AddJsonFile("SwaggerEndPoints.json", optional: false, reloadOnChange: true);
 
             builder.Services.AddOcelot(builder.Configuration);
 

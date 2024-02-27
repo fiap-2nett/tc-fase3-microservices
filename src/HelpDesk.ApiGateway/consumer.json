@@ -9,6 +9,7 @@
           "Port": 443
         }
       ],
+      "SwaggerKey": "Consumer",
       "UpstreamPathTemplate": "/categories",
       "UpstreamHttpMethod": [ "GET" ],
       "DangerousAcceptAnyServerCertificateValidator": true
@@ -22,6 +23,7 @@
           "Port": 443
         }
       ],
+      "SwaggerKey": "Consumer",
       "UpstreamPathTemplate": "/categories/{idCategory}",
       "UpstreamHttpMethod": [ "GET" ],
       "DangerousAcceptAnyServerCertificateValidator": true
@@ -35,6 +37,7 @@
           "Port": 443
         }
       ],
+      "SwaggerKey": "Consumer",
       "UpstreamPathTemplate": "/ticketstatus",
       "UpstreamHttpMethod": [ "GET" ],
       "DangerousAcceptAnyServerCertificateValidator": true
@@ -48,6 +51,7 @@
           "Port": 443
         }
       ],
+      "SwaggerKey": "Consumer",
       "UpstreamPathTemplate": "/ticketstatus/{idTicketStatus}",
       "UpstreamHttpMethod": [ "GET" ],
       "DangerousAcceptAnyServerCertificateValidator": true
@@ -61,6 +65,7 @@
           "Port": 443
         }
       ],
+      "SwaggerKey": "Consumer",
       "UpstreamPathTemplate": "/api/Teste",
       "UpstreamHttpMethod": [ "GET" ],
       "DangerousAcceptAnyServerCertificateValidator": true
@@ -74,6 +79,7 @@
           "Port": 443
         }
       ],
+      "SwaggerKey": "Consumer",
       "UpstreamPathTemplate": "/tickets",
       "UpstreamHttpMethod": [ "GET" ],
       "DangerousAcceptAnyServerCertificateValidator": true
@@ -87,6 +93,7 @@
           "Port": 443
         }
       ],
+      "SwaggerKey": "Consumer",
       "UpstreamPathTemplate": "/tickets/{idTicket}",
       "UpstreamHttpMethod": [ "GET" ],
       "DangerousAcceptAnyServerCertificateValidator": true

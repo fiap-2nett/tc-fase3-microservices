@@ -9,6 +9,7 @@
           "Port": 443
         }
       ],
+      "SwaggerKey": "Producer",
       "UpstreamPathTemplate": "/tickets",
       "UpstreamHttpMethod": [ "POST" ],
       "DangerousAcceptAnyServerCertificateValidator": true
@@ -22,6 +23,7 @@
           "Port": 443
         }
       ],
+      "SwaggerKey": "Producer",
       "UpstreamPathTemplate": "/tickets/{idTicket}/assign-to/me",
       "UpstreamHttpMethod": [ "POST" ],
       "DangerousAcceptAnyServerCertificateValidator": true
@@ -35,6 +37,7 @@
           "Port": 443
         }
       ],
+      "SwaggerKey": "Producer",
       "UpstreamPathTemplate": "/tickets/{idTicket}",
       "UpstreamHttpMethod": [ "PUT" ],
       "DangerousAcceptAnyServerCertificateValidator": true
@@ -48,6 +51,7 @@
           "Port": 443
         }
       ],
+      "SwaggerKey": "Producer",
       "UpstreamPathTemplate": "/tickets/{idTicket}/cancel",
       "UpstreamHttpMethod": [ "POST" ],
       "DangerousAcceptAnyServerCertificateValidator": true
@@ -61,6 +65,7 @@
           "Port": 443
         }
       ],
+      "SwaggerKey": "Producer",
       "UpstreamPathTemplate": "/tickets/{idTicket}/assign-to",
       "UpstreamHttpMethod": [ "POST" ],
       "DangerousAcceptAnyServerCertificateValidator": true
@@ -74,6 +79,7 @@
           "Port": 443
         }
       ],
+      "SwaggerKey": "Producer",
       "UpstreamPathTemplate": "/tickets/{idTicket}/complete",
       "UpstreamHttpMethod": [ "POST" ],
       "DangerousAcceptAnyServerCertificateValidator": true
@@ -87,6 +93,7 @@
           "Port": 443
         }
       ],
+      "SwaggerKey": "Producer",
       "UpstreamPathTemplate": "/tickets/{idTicket}/change-status",
       "UpstreamHttpMethod": [ "POST" ],
       "DangerousAcceptAnyServerCertificateValidator": true
