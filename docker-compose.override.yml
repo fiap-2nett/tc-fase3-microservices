@@ -89,6 +89,7 @@ services:
     depends_on:
       - helpdesk.db
       - helpdesk.mq
+      - helpdesk.consumerservice.api
     ports:
       - "5002:443"
     volumes:
