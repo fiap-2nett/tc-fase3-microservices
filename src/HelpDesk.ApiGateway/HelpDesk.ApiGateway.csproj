@@ -40,4 +40,10 @@
     <InternalsVisibleTo Include="HelpDesk.ApiGateway.IntegrationTests" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="ocelot.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

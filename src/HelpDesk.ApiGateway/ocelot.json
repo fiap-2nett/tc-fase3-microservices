@@ -1,0 +1,129 @@
+{
+  "Routes": [
+    //#region HelpDesk.ApiGateway.Routes
+    {
+      "DownstreamPathTemplate": "/authentication/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.apigateway",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/authentication/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT" ],
+      "SwaggerKey": "gateway",
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/users/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.apigateway",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/users/{everything}",
+      "UpstreamHttpMethod": [ "GET", "PUT" ],
+      "SwaggerKey": "gateway",
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    //#endregion HelpDesk.ApiGateway.Routes
+
+    //#region HelpDesk.ConsumerService.Api.Routes
+    {
+      "DownstreamPathTemplate": "/categories/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.consumerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/categories/{everything}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "SwaggerKey": "consumer",
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/ticketstatus/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.consumerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/ticketstatus/{everything}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "SwaggerKey": "consumer",
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/tickets/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.consumerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/tickets/{everything}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "SwaggerKey": "consumer",
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    //#endregion HelpDesk.ConsumerService.Api.Routes
+
+    //#region HelpDesk.ProducerService.Api.Routes
+    {
+      "DownstreamPathTemplate": "/tickets/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "helpdesk.producerservice.api",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/tickets/{everything}",
+      "UpstreamHttpMethod": [ "POST", "PUT" ],
+      "SwaggerKey": "producer",
+      "DangerousAcceptAnyServerCertificateValidator": true
+    }
+    //#endregion HelpDesk.ProducerService.Api.Routes
+  ],
+
+  "SwaggerEndPoints": [
+    {
+      "Key": "gateway",
+      "Config": [
+        {
+          "Name": "HelpDesk - Gateway API",
+          "Version": "v1",
+          "Url": "https://helpdesk.apigateway/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "consumer",
+      "Config": [
+        {
+          "Name": "HelpDesk - ConsumerService API",
+          "Version": "v1",
+          "Url": "https://helpdesk.consumerservice.api/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "producer",
+      "Config": [
+        {
+          "Name": "HelpDesk - ProducerService API",
+          "Version": "v1",
+          "Url": "https://helpdesk.producerservice.api/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ]
+}

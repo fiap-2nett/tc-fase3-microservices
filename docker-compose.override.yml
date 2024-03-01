@@ -34,7 +34,9 @@ services:
       - Jwt__Security=WvvWzuqwJ5DvDGaRRVnKCuL2k35aEhiY0qoKR7qj0gVn3f6PxwPnhbB2VPp82gLH
       - Jwt__TokenExpirationInMinutes=60
     depends_on:
-      - helpdesk.db      
+      - helpdesk.db
+      - helpdesk.consumerservice.api
+      - helpdesk.producerservice.api
     ports:
       - "5000:443"
     volumes:
@@ -88,7 +90,7 @@ services:
       - helpdesk.db
       - helpdesk.mq
     ports:
-      - "5002:443"    
+      - "5002:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ./docker/aspnet/https:/root/.aspnet/https:ro
