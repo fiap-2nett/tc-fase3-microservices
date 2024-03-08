@@ -120,7 +120,7 @@ Com base na imagem acima iremos detalhar as tabelas e os dados contidos em cada 
 
 A HelpDesk API utiliza como banco de dados o SQL Server 2019 e como Message Broker o RabbitMQ,
 toda a infraestrutura necessária para execução deve ser provisionada automaticamente configurando
-o docker-compose como projeto de inicialização no VS.
+o docker-compose como projeto de inicialização no Visual Studio.
 
 ![Startup Project](startup_project.png)
 
@@ -135,7 +135,7 @@ http://localhost:15672/
 ### Testes unitários, integração e arquiteturais
 
 A HelpDesk API disponibiliza testes automatizados para garantir que o processo contempla as regras de negócio pré-definidas no requisito
-do projeto. Os teste são executados via Github CI/CD Pipeline conforme aprendemos durante o Tech Challenge 2.:
+do projeto. Os testes são executados via Github CI/CD Pipeline conforme aprendemos durante o Tech Challenge 2.:
 
 ![CI/CD Testes Pipeline](test_flow.png)
 
