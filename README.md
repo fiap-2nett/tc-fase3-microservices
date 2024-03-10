@@ -54,14 +54,14 @@ A solução foi arquitetada da seguinte maneira.:
 
 ![Desenho da Arquitetura](project_arch.png)
 
-Temos na frente um Microserviço de **Api Gateway** que atua como intermediário entre os clientes e os demais Microsserviços,
+Temos na frente um Microsserviço de **Api Gateway** que atua como intermediário entre os clientes e os demais Microsserviços,
 recebendo as requisições e aplicando as devidas regras para direcioná-las corretamente. O **Api Gateway** é responsável
 também pela autenticação dos usuários.
 
-Em seguida temos o Microserviço de **Producer** que recebe as requisições do **Api Gateway**, para
+Em seguida temos o Microsserviço de **Producer** que recebe as requisições do **Api Gateway**, para
 adição, atualização e exclusão de registros e as encaminha para o **Event Bus**.
 
-Na sequência há o Microserviço de **Consumer** que recebe requisições do **Api Gateway**, para consulta de registros
+Na sequência há o Microsserviço de **Consumer** que recebe requisições do **Api Gateway**, para consulta de registros
 depois consulta os dados por meio de requisições no **Event Bus** e os retorna para os usuários
 via **Api Gateway**.
 
@@ -69,7 +69,9 @@ Por último temos nosso **Barramento de Eventos (Event Bus)** que recebe as requ
 e **Consumer**, as adiciona na fila de nosso Message Broker (no caso o RabbitMQ) por meio dos exchanges configurados, para que
 estas requisições sejam processadas assincronamente.
 
-Ao abrir o código da solução do HelpDesk API pode-se encontrar os seguintes projetos:
+Ao abrir o código da solução do HelpDesk API pode-se encontrar os seguintes projetos agrupados por contextos de microsserviços:
+
+### ApiGateway - Microsserviço
 
 | Projeto                                          | Descrição                                                                                                                                                 |
 |--------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -81,21 +83,36 @@ Ao abrir o código da solução do HelpDesk API pode-se encontrar os seguintes p
 | _HelpDesk.ApiGateway.Application.UnitTests_      | Contém a implementação dos testes unitários focados nas classes de serviço do Api Gateway.                                                                |
 | _HelpDesk.ApiGateway.ArchitectureTests_          | Contém a implementação dos testes de arquitetura do Api Gateway.                                                                                          |
 | _HelpDesk.ApiGateway.IntegrationTests_           | Contém a implementação dos testes integrados do Api Gateway.                                                                                              |
-| _HelpDesk.ConsumerService.Api_                   | Contém a implementação dos endpoints de comunicação do Microserviço de Consumer.                                                                         |
-| _HelpDesk.ConsumerService.Application_           | Contém a implementação dos contratos de comunicação e classes de serviços do Microserviço de Consumer.                                                   |
-| _HelpDesk.ConsumerService.Domain_                | Contém a implementação das entidades e interfaces do domínio do Microserviço de Consumer.                                                                |
-| _HelpDesk.ConsumerService.Infrastructure_        | Contém a implementação dos componentes relacionados a infraestrutura do Microserviço de Consumer.                                                        | 
-| _HelpDesk.ConsumerService.Persistence_           | Contém a implementação dos componentes relacionados a consulta e persistência de dados do Microserviço de Consumer.                                      |   
-| _HelpDesk.ConsumerService.Application.UnitTests_ | Contém a implementação dos testes unitários focados nas classes de serviço do Microserviço de Consumer.                                                  |
-| _HelpDesk.ConsumerService.ArchitectureTests_     | Contém a implementação dos testes de arquitetura do Microserviço de Consumer.                                                                            |  
-| _HelpDesk.ConsumerService.Api.IntegrationTests_  | Contém a implementação dos testes integrados do Microserviço de Consumer.                                                                                |
-| _HelpDesk.ProducerService.Api_                   | Contém a implementação dos endpoints de comunicação do Microserviço de Producer.                                                                         |
-| _HelpDesk.ProducerService.Application_           | Contém a implementação dos contratos de comunicação e classes de serviços do Microserviço de Producer.                                                   |
-| _HelpDesk.ProducerService.Domain_                | Contém a implementação das entidades e interfaces do domínio do Microserviço de Producer.                                                                |
-| _HelpDesk.ProducerService.Infrastructure_        | Contém a implementação dos componentes relacionados à infraestrutura do Microserviço de Producer.                                                        |
-| _HelpDesk.ProducerService.Persistence_           | Contém a implementação dos componentes relacionados à consulta e persistência de dados do Microserviço de Producer.                                      |
-| _HelpDesk.ProducerService.Application.UnitTests_ | Contém a implementação dos testes unitários focados nas classes de serviço do Microserviço de Producer.                                                  |
-| _HelpDesk.ProducerService.ArchitectureTests_     | Contém a implementação dos testes de arquitetura do Microserviço de Producer.                                                                            |
+
+### ConsumerService - Microsserviço
+
+| Projeto                                          | Descrição                                                                                                                                                 |
+|--------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| _HelpDesk.ConsumerService.Api_                   | Contém a implementação dos endpoints de comunicação do Microserviço de Consumer.                                                                          |
+| _HelpDesk.ConsumerService.Application_           | Contém a implementação dos contratos de comunicação e classes de serviços do Microserviço de Consumer.                                                    |
+| _HelpDesk.ConsumerService.Domain_                | Contém a implementação das entidades e interfaces do domínio do Microserviço de Consumer.                                                                 |
+| _HelpDesk.ConsumerService.Infrastructure_        | Contém a implementação dos componentes relacionados a infraestrutura do Microserviço de Consumer.                                                         | 
+| _HelpDesk.ConsumerService.Persistence_           | Contém a implementação dos componentes relacionados a consulta e persistência de dados do Microserviço de Consumer.                                       |   
+| _HelpDesk.ConsumerService.Application.UnitTests_ | Contém a implementação dos testes unitários focados nas classes de serviço do Microserviço de Consumer.                                                   |
+| _HelpDesk.ConsumerService.ArchitectureTests_     | Contém a implementação dos testes de arquitetura do Microserviço de Consumer.                                                                             |  
+| _HelpDesk.ConsumerService.Api.IntegrationTests_  | Contém a implementação dos testes integrados do Microserviço de Consumer.                                                                                 |
+
+### ProducerService - Microsserviço
+
+| Projeto                                          | Descrição                                                                                                                                                 |
+|--------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| _HelpDesk.ProducerService.Api_                   | Contém a implementação dos endpoints de comunicação do Microserviço de Producer.                                                                          |
+| _HelpDesk.ProducerService.Application_           | Contém a implementação dos contratos de comunicação e classes de serviços do Microserviço de Producer.                                                    |
+| _HelpDesk.ProducerService.Domain_                | Contém a implementação das entidades e interfaces do domínio do Microserviço de Producer.                                                                 |
+| _HelpDesk.ProducerService.Infrastructure_        | Contém a implementação dos componentes relacionados à infraestrutura do Microserviço de Producer.                                                         |
+| _HelpDesk.ProducerService.Persistence_           | Contém a implementação dos componentes relacionados à consulta e persistência de dados do Microserviço de Producer.                                       |
+| _HelpDesk.ProducerService.Application.UnitTests_ | Contém a implementação dos testes unitários focados nas classes de serviço do Microserviço de Producer.                                                   |
+| _HelpDesk.ProducerService.ArchitectureTests_     | Contém a implementação dos testes de arquitetura do Microserviço de Producer.                                                                             |
+
+### HelpDesk.Core - SharedKernel
+
+| Projeto                                          | Descrição                                                                                                                                                 |
+|--------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | _HelpDesk.Core.Domain_                           | Contém a implementação de classes compartilhadas comuns entre os Microserviços como, por exemplo, alguns Enumerators.                                     | 
 
 ## Modelagem de dados
@@ -126,11 +143,22 @@ o docker-compose como projeto de inicialização no Visual Studio.
 
 Após rodar o projeto a iteração pode ser feita pelo link abaixo.:
 
-https://localhost:5000/swagger/index.html
+[https://localhost:5000/swagger/index.html](https://localhost:5000/swagger/index.html)
 
 Caso queira acompanhar a fila de execução do RabbitMQ, segue abaixo.:
 
-http://localhost:15672/
+[http://localhost:15672/](http://localhost:15672/)
+
+Também é possível executar a solução diretamente sem a necessidade do Visual Studio, para tal apenas necessitamos do Docker previamente instalado.
+Para executar a solução diretamente através do Docker, abra um terminal no diretório raíz do projeto e execute o seguinte comando:
+
+```sh
+$ docker compose up -d
+```
+
+Após rodar o projeto a iteração pode ser feita pelo link abaixo.:
+
+[https://localhost:5000/swagger/index.html](https://localhost:5000/swagger/index.html)
 
 ### Testes unitários, integração e arquiteturais
 
@@ -139,7 +167,10 @@ do projeto. Os testes são executados via Github CI/CD Pipeline conforme aprende
 
 ![CI/CD Testes Pipeline](test_flow.png)
 
-Se preferir, os testes também podem ser executados localmente via dotnet CLI. Para isso rode os comandos abaixo.:
+Se preferir, os testes também podem ser executados localmente via dotnet CLI.
+
+Para isso rode os comandos abaixo para execução individual de cada projeto de teste:
+
 ```sh
 $ dotnet test tests/HelpDesk.ApiGateway.Application.UnitTests/HelpDesk.ApiGateway.Application.UnitTests.csproj --no-build --verbosity normal
 $ dotnet test tests/HelpDesk.ConsumerService.Application.UnitTests/HelpDesk.ConsumerService.Application.UnitTests.csproj --no-build --verbosity normal
@@ -149,6 +180,12 @@ $ dotnet test tests/HelpDesk.ConsumerService.ArchitectureTests/HelpDesk.Consumer
 $ dotnet test tests/HelpDesk.ProducerService.ArchitectureTests/HelpDesk.ProducerService.ArchitectureTests.csproj --no-build --verbosity normal
 $ dotnet test tests/HelpDesk.ApiGateway.IntegrationTests/HelpDesk.ApiGateway.IntegrationTests.csproj --no-build --verbosity normal
 $ dotnet test tests/HelpDesk.ConsumerService.Api.IntegrationTests/HelpDesk.ConsumerService.Api.IntegrationTests.csproj --no-build --verbosity normal
+```
+
+Caso queira executar todos os projetos de teste, execute o comando:
+
+```sh
+$ dotnet test TechChallenge.sln
 ```
 
 Caso queria uma versão de resultado com mais detalhes, execute o seguinte comando:
